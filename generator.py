@@ -1,12 +1,12 @@
 # Generates a password if one doesn't already exist
 
 import random
-from csv import writer
+from csv import writer, reader
 
 # Get the user input
 while 1:
     try:
-        name = str(input("What is the password for?\n")).upper()
+        name = str(input("What is the password for? ")).upper()
     except ValueError:
         print("Please enter a String")
         continue
@@ -24,17 +24,16 @@ password_len = 12
 
 password = "".join(random.sample(valid_characters, password_len))
 
-print(f'Password is: {password}')
-
 data = []
 
 # open the file to read, to make sure that there isn't already a password
 try:
     with open('passwords.csv', 'r') as fp:
-        current_values = fp.read()
-        if 3 == 5:
-            # Implement for when there is a duplicate name
-            pass
+        csv_reader = reader(fp, delimiter=',')
+        for row in csv_reader:
+            if row[0] == name:
+                print(f'password already exists for that item')
+                exit(0)
 
         data.append(name)
         data.append(password)    
