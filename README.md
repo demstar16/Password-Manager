@@ -19,6 +19,6 @@ python manager.py
 - [X] clean up code and document
 - [X] combine into one user friendly script
 - [X] create a nice README
-- [ ] "bullet proof" the code in terms of usage
+- [X] "bullet proof" the code in terms of usage
 - [ ] look into encryption
 - [ ] done
