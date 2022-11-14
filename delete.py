@@ -1,5 +1,3 @@
-import csv
-
 while 1:
     try:
         to_delete = str(input("Which password do you want to delete?\n")).upper()
@@ -11,7 +9,6 @@ while 1:
 
 
 with open('passwords.csv', 'r') as fp:
-    #csv_reader = csv.reader(fp, delimiter=',')
     lines = []
     for row in fp:
         current_row = row.strip('\n').split(",")

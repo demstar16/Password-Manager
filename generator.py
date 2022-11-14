@@ -1,7 +1,6 @@
 # Generates a password if one doesn't already exist
 
 import random
-from csv import writer, reader
 
 # Get the user input
 while 1:
@@ -31,7 +30,6 @@ data = name + "," + password + '\n'
 # open the file to read, to make sure that there isn't already a password
 try:
     with open('passwords.csv', 'r') as fp:
-        #csv_reader = reader(fp, delimiter=',')
         for row in fp:
             current_row = row.strip('\n').split(",")
             if current_row == [] or current_row == '': continue
