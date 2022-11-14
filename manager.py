@@ -26,6 +26,7 @@ def changer():
             break
 
     password = password_generator()
+    changed = False
 
     # read the file and change appropriate line
     with open('passwords.csv', 'r') as fp:
@@ -38,6 +39,7 @@ def changer():
             
             if current_row[0] == pw_to_change:
                 lines.remove(row)
+                changed = True
                 current_row[1] = password
                 print(f"\nPassword for {pw_to_change} has been changed.")
 
@@ -51,23 +53,34 @@ def changer():
             fp.write(line)
     fp.close()
 
+    if changed == True:
+        print(f"\nPassword for {pw_to_change} has successfully changed")
+    else:
+        print(f"\nThere is no password for {pw_to_change}, try to generate one.")
+
 def finder():
     while 1:
         try:
             wanted_pw = str(input("\nWhich password do you want?\n")).upper()
         except ValueError:
-            print("please enter a string")
+            print("\nplease enter a string\n")
             continue
         else:
             break
 
+    found = False
+
     with open('passwords.csv', 'r') as fp:
-        csv_reader = csv.reader(fp, delimiter=',')
-        for row in csv_reader:
-            if row[0] == wanted_pw:
-                print(f'\nPassword for {wanted_pw}: {row[1]}')
+        for row in fp:
+            current_row = row.strip('\n').split(",")
+            if current_row[0] == wanted_pw:
+                found = True
+                print(f'\nPassword for {wanted_pw}: {current_row[1]}')
                 break
     fp.close()
+
+    if found == False:
+        print(f"\nthere is no password for {wanted_pw}")
 
 def generator():
     # Get the user input
@@ -75,7 +88,7 @@ def generator():
         try:
             name = str(input("\nWhat is the password for? ")).upper()
         except ValueError:
-            print("Please enter a String")
+            print("\nPlease enter a String\n")
             continue
         else:
             break
@@ -91,7 +104,7 @@ def generator():
                 current_row = row.strip('\n').split(",")
                 if current_row == [] or current_row == '': continue
                 if current_row[0] == name:
-                    print(f'password already exists for that item')
+                    print(f'\npassword already exists for that item')
                     exit(0)    
             fp.close()
     except FileNotFoundError:
@@ -112,11 +125,13 @@ def delete():
         try:
             to_delete = str(input("\nWhich password do you want to delete?\n")).upper()
         except ValueError:
-            print("please enter a string")
+            print("\nplease enter a string\n")
             continue
         else:
             break
 
+    deleted = False
+    
     # remove the row from the arary of lines
     with open('passwords.csv', 'r') as fp:
         lines = []
@@ -127,18 +142,19 @@ def delete():
             lines.append(row)
             
             if current_row[0] == to_delete:
-                lines.remove(row)   
+                lines.remove(row)
+                deleted = True   
     fp.close()
 
     # re-write the file
     with open('passwords.csv', 'w') as fp:
         for line in lines:
-            line = line.strip('\n').split(",")
-            data = line[0] + ',' + line[1] + '\n'
-            fp.write(data)
+            fp.write(line)
     fp.close()
-
-    print(f"\nPassword for {to_delete} has successfully been removed")
+    if deleted == True:
+        print(f"\nPassword for {to_delete} has successfully been removed")
+    else:
+        print(f"\nThere is no password for {to_delete}")
 
 def sort():
 
@@ -159,17 +175,17 @@ def sort():
             fp.write(line)
     fp.close()
 
-    print("\npasswords have successfully been sorted!")
+    print("\npasswords have successfully been sorted!\n")
 
 def main():
     while 1:
         try:
             reply = int(input("What would you like to do?\n1. Generate a password\n2. Change a password\n3. Delete a password\n4. Find a password\n5. Sort the passwords alphabetically\nYour Reply: "))
             if reply < 0 or reply > 5:
-                print("please try a valid option")
+                print("\nplease try a valid option\n")
                 continue
         except ValueError:
-            print("please enter a number")
+            print("\nplease enter a number\n")
             continue
         else:
             break
