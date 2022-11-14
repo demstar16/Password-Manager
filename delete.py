@@ -1,3 +1,6 @@
+# deletes a given names password
+
+# get the user input for which password to delete
 while 1:
     try:
         to_delete = str(input("Which password do you want to delete?\n")).upper()
@@ -7,7 +10,7 @@ while 1:
     else:
         break
 
-
+# remove the row from the arary of lines
 with open('passwords.csv', 'r') as fp:
     lines = []
     for row in fp:
@@ -20,6 +23,7 @@ with open('passwords.csv', 'r') as fp:
             lines.remove(row)   
 fp.close()
 
+# re-write the file
 with open('passwords.csv', 'w') as fp:
     for line in lines:
         line = line.strip('\n').split(",")

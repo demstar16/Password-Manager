@@ -1,5 +1,8 @@
+# changes a given names password
+
 import random
 
+# get input from the user for which password to alter
 while 1:
     try:
         pw_to_change = str(input("Which password do you want to change?\n")).upper()
@@ -20,6 +23,7 @@ password_len = 12
 
 password = "".join(random.sample(valid_characters, password_len))
 
+# read the file and change appropriate line
 with open('passwords.csv', 'r') as fp:
     lines = []
     for row in fp:
@@ -37,6 +41,7 @@ with open('passwords.csv', 'r') as fp:
             lines.append(data)
 fp.close()
 
+# re-write the files contents
 with open('passwords.csv', 'w') as fp:
     for line in lines:
         fp.write(line)
